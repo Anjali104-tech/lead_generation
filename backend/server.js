@@ -4,6 +4,7 @@ const config = require("./config");
 const queryRoutes = require("./routes/queryRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const filterRoutes = require("./routes/filterRoutes");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/api", queryRoutes);
 app.use("/api", companyRoutes);
 app.use("/api", contactRoutes);
+app.use("/api", filterRoutes);
 
 // Basic route for testing
 app.get("/", (req, res) => {

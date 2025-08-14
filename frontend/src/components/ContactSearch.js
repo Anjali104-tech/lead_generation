@@ -203,7 +203,16 @@ const ContactSearch = ({ selectedCompanies, jobTitles, parsedFilters }) => {
     } catch (err) {
       console.error("Error fetching contacts:", err);
       console.error("Error details:", err.response?.data);
-      setError(err.response?.data?.error || "Failed to fetch contacts");
+      
+      // Check if it's a "no results" type error
+      const errorMessage = err.response?.data?.error || '';
+      if (errorMessage.toLowerCase().includes('no results') || 
+          errorMessage.toLowerCase().includes('not found') ||
+          errorMessage.toLowerCase().includes('no contacts')) {
+        setError("No Results Found. Try Clearing Some Filters? Results matching this query could not be displayed. Please try refining your search or clearing some of your filters.");
+      } else {
+        setError(errorMessage || "Failed to fetch contacts");
+      }
       setContacts([]);
     } finally {
       setLoading(false);

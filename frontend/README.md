@@ -1,30 +1,37 @@
 # Lead Generation Frontend
 
-A modern React application for lead generation with a beautiful Tailwind CSS UI.
+This is the frontend application for the Lead Generation system with dynamic filtering capabilities.
 
 ## Features
 
-- **Smart Query Parser**: Convert natural language queries into structured filters
-- **Company Search**: Find companies based on industry, keywords, and regions
-- **Contact Discovery**: Find contacts within selected companies
-- **Export Functionality**: Export contacts to CSV format
-- **Responsive Design**: Beautiful, modern UI built with Tailwind CSS
+### Dynamic Sidebar Filters
+The application now includes a comprehensive sidebar with dynamic filter data fetched from the backend API. All filter options are populated from the Crust API documentation and backend data sources.
 
-## Tech Stack
+#### Filter Categories:
+- **Job Titles**: CEO, CTO, CFO, VP roles, Directors, Managers, etc.
+- **Industries**: Complete industry list from `industry_data.js`
+- **Regions**: Global regions from `region_data.js`
+- **Company Size**: Employee count ranges (1-10, 11-50, etc.)
+- **Annual Revenue**: Revenue ranges in millions USD
+- **Seniority Levels**: Owner/Partner, CXO, VP, Director, etc.
+- **Years of Experience**: Experience ranges (Less than 1 year, 1-2 years, etc.)
+- **Departments**: Engineering, Sales, Marketing, Finance, etc.
+- **Company Types**: Public, Private, Non-Profit, etc.
+- **Profile Languages**: Multiple language options
+- **Fortune Rankings**: Fortune 50, 51-100, etc.
+- **Followers**: LinkedIn follower ranges
+- **Boolean Filters**: Recently changed jobs, Posted on LinkedIn, In the news
 
-- **React 19**: Latest React with hooks and functional components
-- **Tailwind CSS**: Utility-first CSS framework for rapid UI development
-- **Axios**: HTTP client for API communication
-- **PostCSS**: CSS processing with autoprefixer
+#### API Endpoints:
+- `GET /api/filter-data`: Returns all filter options dynamically
+- `POST /api/parse-query`: Parses natural language queries into structured filters
+
+#### Data Sources:
+- **Industries**: From `backend/industry_data.js`
+- **Regions**: From `backend/region_data.js`
+- **Other Filters**: Based on Crust API documentation
 
 ## Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
 
 1. Install dependencies:
    ```bash
@@ -36,101 +43,24 @@ A modern React application for lead generation with a beautiful Tailwind CSS UI.
    npm start
    ```
 
-3. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3. Make sure the backend server is running on port 5000
 
-### Build for Production
+## Components
 
-```bash
-npm run build
-```
+### Sidebar.js
+The main sidebar component that:
+- Fetches filter data dynamically from the backend
+- Provides expandable/collapsible filter sections
+- Includes loading and error states
+- Supports multiple filter types (multi-select, range sliders, radio buttons)
 
-## Project Structure
+### App.js
+Updated to include the sidebar in a two-column layout with the main content area.
 
-```
-src/
-├── components/
-│   ├── QueryParser.js      # Main query parsing interface
-│   ├── CompanyResults.js   # Company search and selection
-│   └── ContactSearch.js    # Contact discovery and export
-├── App.js                  # Main application component
-├── index.js               # Application entry point
-└── index.css              # Tailwind CSS imports and custom styles
-```
+## Styling
+- Uses Tailwind CSS for styling
+- Custom CSS for range sliders and animations
+- Responsive design with proper hover effects
 
-## UI Components
-
-### Custom Tailwind Classes
-
-The application uses custom Tailwind classes defined in `index.css`:
-
-- `.btn-primary`: Primary button with gradient background
-- `.btn-secondary`: Secondary button with border
-- `.card`: Card component with shadow and hover effects
-- `.input-field`: Styled input fields with focus states
-
-### Color Scheme
-
-- **Primary**: Blue gradient (`blue-600` to `blue-700`)
-- **Secondary**: Purple gradient (`purple-600` to `pink-600`)
-- **Success**: Green tones
-- **Error**: Red tones
-- **Warning**: Orange tones
-
-## API Integration
-
-The frontend communicates with the backend API endpoints:
-
-- `POST /api/parse-query`: Parse natural language queries
-- `POST /api/find-companies`: Search for companies
-- `POST /api/find-contacts`: Find contacts within companies
-
-## Responsive Design
-
-The application is fully responsive and works on:
-- Desktop (1024px+)
-- Tablet (768px - 1023px)
-- Mobile (320px - 767px)
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Development
-
-### Available Scripts
-
-- `npm start`: Runs the app in development mode
-- `npm test`: Launches the test runner
-- `npm run build`: Builds the app for production
-- `npm run eject`: Ejects from Create React App (not recommended)
-
-### Code Style
-
-- Use functional components with hooks
-- Follow Tailwind CSS utility-first approach
-- Maintain consistent spacing and typography
-- Use semantic HTML elements
-
-## Recent Changes
-
-### Tailwind CSS Migration
-
-The application has been successfully migrated from Material-UI to Tailwind CSS:
-
-- ✅ Removed Material-UI dependencies
-- ✅ Installed and configured Tailwind CSS
-- ✅ Converted all components to use Tailwind classes
-- ✅ Maintained all functionality and visual appeal
-- ✅ Improved performance and bundle size
-- ✅ Enhanced customizability and maintainability
-
-### Benefits of Tailwind CSS
-
-- **Smaller bundle size**: No large component library
-- **Better performance**: No runtime CSS-in-JS overhead
-- **More customizable**: Direct control over styling
-- **Faster development**: Utility-first approach
-- **Better maintainability**: No component library version dependencies
+## Filter Integration
+The sidebar filters are designed to work with the existing query parser system. When filters are applied, they can be converted to the same format used by the natural language query parser for consistency.

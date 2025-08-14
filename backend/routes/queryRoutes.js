@@ -249,6 +249,10 @@ Each filter should be an array even if there's only one value.`;
     let parsedFilters;
     try {
       parsedFilters = JSON.parse(content);
+      console.log("Parsed filters from AI:", parsedFilters);
+      console.log("RECENTLY_CHANGED_JOBS from AI:", parsedFilters.RECENTLY_CHANGED_JOBS);
+      console.log("POSTED_ON_LINKEDIN from AI:", parsedFilters.POSTED_ON_LINKEDIN);
+      console.log("IN_THE_NEWS from AI:", parsedFilters.IN_THE_NEWS);
     } catch (error) {
       console.error("Failed to parse OpenAI response as JSON:", content);
       return res.status(500).json({
@@ -363,9 +367,9 @@ Each filter should be an array even if there's only one value.`;
       YEARS_AT_CURRENT_COMPANY: parsedFilters.YEARS_AT_CURRENT_COMPANY || [],
       YEARS_IN_CURRENT_POSITION: parsedFilters.YEARS_IN_CURRENT_POSITION || [],
       SENIORITY_LEVEL: parsedFilters.SENIORITY_LEVEL || [],
-      RECENTLY_CHANGED_JOBS: parsedFilters.RECENTLY_CHANGED_JOBS || false,
-      POSTED_ON_LINKEDIN: parsedFilters.POSTED_ON_LINKEDIN || false,
-      IN_THE_NEWS: parsedFilters.IN_THE_NEWS || false
+      RECENTLY_CHANGED_JOBS: parsedFilters.RECENTLY_CHANGED_JOBS,
+      POSTED_ON_LINKEDIN: parsedFilters.POSTED_ON_LINKEDIN,
+      IN_THE_NEWS: parsedFilters.IN_THE_NEWS
     };
 
     // Validation: Check for over-inferred filters

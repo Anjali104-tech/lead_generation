@@ -91,9 +91,38 @@ router.post("/find-companies", async (req, res) => {
       return mappedFilter;
     });
 
+    // Filter out people-specific filters that are not valid for company search
+    const validCompanyFilters = mappedFilters.filter(filter => {
+      const validCompanyFilterTypes = [
+        'COMPANY_HEADCOUNT',
+        'REGION', 
+        'INDUSTRY',
+        'NUM_OF_FOLLOWERS',
+        'DEPARTMENT_HEADCOUNT_GROWTH',
+        'FORTUNE',
+        'TECHNOLOGIES_USED',
+        'COMPANY_HEADCOUNT_GROWTH',
+        'ANNUAL_REVENUE',
+        'DEPARTMENT_HEADCOUNT',
+        'ACCOUNT_ACTIVITIES',
+        'JOB_OPPORTUNITIES',
+        'KEYWORD'
+      ];
+      
+      const isValid = validCompanyFilterTypes.includes(filter.filter_type);
+      if (!isValid) {
+        console.log(`Filtering out people-specific filter: ${filter.filter_type} (not valid for company search)`);
+      } else {
+        console.log(`Using company filter: ${filter.filter_type}`);
+      }
+      return isValid;
+    });
+
+    console.log(`Total filters received: ${mappedFilters.length}, Valid company filters: ${validCompanyFilters.length}`);
+
     // Prepare request body
     requestBody = {
-      filters: mappedFilters,
+      filters: validCompanyFilters,
       page,
       page_size: 10, // Specify page size to ensure consistent pagination
     };
